@@ -1,14 +1,23 @@
 import { Hono } from "hono";
+import { env as cloudflareEnv } from "cloudflare:workers";
 
 interface Env {
   urls: KVNamespace;
   ASSETS: Fetcher;
   API_KEY?: string;
+  RESERVED_KEYS: string;
 }
 
-const RESERVED_KEYS = ["api", "public", "static", "assets", "admin"];
-
 const app = new Hono<{ Bindings: Env }>();
+
+// Auth Middleware
+const authMiddleware = async (c: any, next: any) => {
+  const auth = c.req.header("Authorization");
+  if (c.env.API_KEY && auth !== c.env.API_KEY) {
+    return c.json({ success: false, error: "Unauthorized" }, 401);
+  }
+  await next();
+};
 
 const generateRandomCode = (length = 4) => {
   const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
@@ -19,12 +28,7 @@ const generateRandomCode = (length = 4) => {
   return result;
 };
 
-app.get("/api/links", async (c) => {
-  const auth = c.req.header("Authorization");
-  if (c.env.API_KEY && auth !== c.env.API_KEY) {
-    return c.json({ success: false, error: "Unauthorized" }, 401);
-  }
-
+app.get("/api/links", authMiddleware, async (c) => {
   const list = await c.env.urls.list();
   const links: Record<string, string> = {};
 
@@ -38,19 +42,13 @@ app.get("/api/links", async (c) => {
   return c.json(links);
 });
 
-app.post("/api/links", async (c) => {
-  const auth = c.req.header("Authorization");
-  if (c.env.API_KEY && auth !== c.env.API_KEY) {
-    return c.json({ success: false, error: "Unauthorized" }, 401);
-  }
-
+app.post("/api/links", authMiddleware, async (c) => {
   let { code, url } = await c.req.json<{ code: string; url: string }>();
 
   if (!url) {
     return c.json({ success: false, error: "Missing destination URL." }, 400);
   }
 
-  // 1. URL Length Validation
   if (url.length > 1500) {
     return c.json(
       { success: false, error: "URL is too long. Max 1500 characters." },
@@ -58,13 +56,14 @@ app.post("/api/links", async (c) => {
     );
   }
 
-  // 2. Short Code Logic
+  const reservedKeys = c.env.RESERVED_KEYS.split(",");
+
   if (!code || code.trim() === "") {
     let attempts = 0;
     do {
       code = generateRandomCode(4);
       const exists = await c.env.urls.get(code);
-      if (!exists) break;
+      if (!exists && !reservedKeys.includes(code)) break;
       attempts++;
     } while (attempts < 5);
   } else {
@@ -80,7 +79,7 @@ app.post("/api/links", async (c) => {
       );
     }
 
-    if (RESERVED_KEYS.includes(code)) {
+    if (reservedKeys.includes(code)) {
       return c.json(
         { success: false, error: "This code is reserved and cannot be used." },
         400,
@@ -96,7 +95,6 @@ app.post("/api/links", async (c) => {
     }
   }
 
-  // 3. URL Format Check
   try {
     const validUrl = new URL(url);
     if (!["http:", "https:"].includes(validUrl.protocol)) throw new Error();
@@ -114,12 +112,7 @@ app.post("/api/links", async (c) => {
   return c.json({ success: true });
 });
 
-app.delete("/api/links", async (c) => {
-  const auth = c.req.header("Authorization");
-  if (c.env.API_KEY && auth !== c.env.API_KEY) {
-    return c.json({ success: false, error: "Unauthorized" }, 401);
-  }
-
+app.delete("/api/links", authMiddleware, async (c) => {
   const { code } = await c.req.json<{ code: string }>();
 
   if (!code) {

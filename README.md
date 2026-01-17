@@ -8,7 +8,7 @@ A high-performance, premium URL shortener built on the edge with **Cloudflare Wo
 - **🎨 Premium Admin UI**: A sleek, dark-mode dashboard built with Tailwind CSS, Lucide Icons, and Vanilla JS.
 - **🔒 Secure Admin**: Protected API routes with `API_KEY` authentication.
 - **🎲 Smart Generation**: If you don't provide a shortcode, sh.me will automatically generate a unique 4-character code for you.
-- **🛡️ Robust Validation**: Handles large URLs (up to 1500 chars), prevents duplicates, and blocks reserved keywords.
+- **🛡️ Robust Validation**: Handles large URLs (up to 2048 chars), prevents duplicates, and blocks reserved keywords.
 - **🌓 Case Insensitive**: Codes match regardless of casing (e.g., `/MyLink` == `/mylink`).
 - **📱 Mobile Responsive**: Works perfectly on any device.
 
@@ -31,7 +31,7 @@ A high-performance, premium URL shortener built on the edge with **Cloudflare Wo
 ### 2. Installation
 
 ```bash
-git clone https://github.com/xeven777/sh.me.git
+git clone https://github.com/anish7/sh.me.git
 cd sh.me
 bun install
 ```
