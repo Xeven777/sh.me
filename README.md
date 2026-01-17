@@ -1,23 +1,23 @@
 # 🚀 sh.me — Tiny URL Shortener
 
-A high-performance, premium URL shortener built on the edge with **Cloudflare Workers**, **Hono**, and **Cloudflare KV**.
+A high-performance, premium URL shortener built on the edge with **Cloudflare Pages**, **Hono JSX**, and **Cloudflare KV**.
 
 ## ✨ Features
 
 - **⚡ Edge Redirection**: Ultra-fast 302 redirects served from the nearest Cloudflare PoP.
-- **🎨 Premium Admin UI**: A sleek, dark-mode dashboard built with Tailwind CSS, Lucide Icons, and Vanilla JS.
+- **🎨 Premium Admin UI**: A sleek, dark-mode dashboard built with Hono JSX, Tailwind CSS, and Lucide Icons.
 - **🔒 Secure Admin**: Protected API routes with `API_KEY` authentication.
 - **🎲 Smart Generation**: If you don't provide a shortcode, sh.me will automatically generate a unique 4-character code for you.
-- **🛡️ Robust Validation**: Handles large URLs (up to 2048 chars), prevents duplicates, and blocks reserved keywords.
+- **🛡️ Robust Validation**: Handles large URLs (up to 1500 chars), prevents duplicates, and blocks reserved keywords.
 - **🌓 Case Insensitive**: Codes match regardless of casing (e.g., `/MyLink` == `/mylink`).
 - **📱 Mobile Responsive**: Works perfectly on any device.
 
 ## 🛠️ Tech Stack
 
-- **Core**: [Hono](https://hono.dev/) (Lightweight Web Framework)
-- **Runtime**: [Cloudflare Workers](https://workers.cloudflare.com/)
+- **Framework**: [Hono](https://hono.dev/) (Lightweight Web Framework)
+- **Deployment**: [Cloudflare Pages](https://pages.cloudflare.com/)
 - **Database**: [Cloudflare KV](https://developers.cloudflare.com/kv/)
-- **Frontend**: HTML5, Vanilla JavaScript, [Tailwind CSS](https://tailwindcss.com/)
+- **Frontend**: Hono JSX, Tailwind CSS (CDN)
 - **Icons**: [Lucide](https://lucide.dev/)
 - **Package Manager**: Bun
 
@@ -26,7 +26,7 @@ A high-performance, premium URL shortener built on the edge with **Cloudflare Wo
 ### 1. Prerequisites
 
 - [Bun](https://bun.sh/) installed.
-- [Wrangler](https://developers.cloudflare.com/workers/wrangler/install-and-update/) CLI installed.
+- Cloudflare Account.
 
 ### 2. Installation
 
@@ -38,35 +38,23 @@ bun install
 
 ### 3. Local Development
 
-Create a `.dev.vars` file in the root directory:
-
-```text
-API_KEY=your_secret_admin_token
-```
-
-Start the wrangler dev server:
+Start the development server:
 
 ```bash
 bun run dev
 ```
 
-Open [http://localhost:8787](http://localhost:8787). The UI will prompt you for your `API_KEY` the first time you perform an action.
+Open [http://localhost:5173](http://localhost:5173).
 
 ### 4. Configuration (Cloudflare)
 
-1. Create a KV namespace:
-   ```bash
-   bun wrangler kv namespace create urls
-   ```
-2. Update `wrangler.jsonc` with the generated `id`.
-3. Set your production API Key:
-   ```bash
-   bun wrangler secret put API_KEY
-   ```
+1. Create a KV namespace named `urls` in your Cloudflare Dashboard.
+2. Update `wrangler.jsonc` with your KV namespace `id`.
+3. Set your environment variables (`API_KEY`, `RESERVED_KEYS`) in the Cloudflare Pages settings.
 
 ### 5. Deployment
 
-Deploy to Cloudflare's global network:
+Deploy to Cloudflare Pages:
 
 ```bash
 bun run deploy
@@ -74,7 +62,7 @@ bun run deploy
 
 ## 🔌 API Endpoints
 
-All requests (except redirection) require the `Authorization` header.
+All requests (except redirection) require the `Authorization` header if `API_KEY` is set.
 
 | Method   | Endpoint     | Description                                                      |
 | :------- | :----------- | :--------------------------------------------------------------- |
