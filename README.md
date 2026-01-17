@@ -4,12 +4,13 @@ A high-performance, premium URL shortener built on the edge with **Cloudflare Wo
 
 ## ✨ Features
 
-- **Edge Redirection**: Ultra-fast 302 redirects served from the nearest Cloudflare PoP.
-- **Premium Admin UI**: A sleek, dark-mode dashboard built with Tailwind CSS, Lucide Icons, and Vanilla JS.
-- **KV Storage**: Simple and persistent key-value storage for link mappings.
-- **Full Management**: Add, view, and delete short links with instant UI updates.
-- **Static Assets**: Frontend assets served directly via the Worker's Asset binding.
-- **Mobile Responsive**: Works perfectly on any device.
+- **⚡ Edge Redirection**: Ultra-fast 302 redirects served from the nearest Cloudflare PoP.
+- **🎨 Premium Admin UI**: A sleek, dark-mode dashboard built with Tailwind CSS, Lucide Icons, and Vanilla JS.
+- **🔒 Secure Admin**: Protected API routes with `API_KEY` authentication.
+- **🎲 Smart Generation**: If you don't provide a shortcode, sh.me will automatically generate a unique 4-character code for you.
+- **🛡️ Robust Validation**: Handles large URLs (up to 1500 chars), prevents duplicates, and blocks reserved keywords.
+- **🌓 Case Insensitive**: Codes match regardless of casing (e.g., `/MyLink` == `/mylink`).
+- **📱 Mobile Responsive**: Works perfectly on any device.
 
 ## 🛠️ Tech Stack
 
@@ -26,17 +27,22 @@ A high-performance, premium URL shortener built on the edge with **Cloudflare Wo
 
 - [Bun](https://bun.sh/) installed.
 - [Wrangler](https://developers.cloudflare.com/workers/wrangler/install-and-update/) CLI installed.
-- A Cloudflare account.
 
 ### 2. Installation
 
 ```bash
-git clone https://github.com/anish7/sh.me.git
+git clone https://github.com/xeven777/sh.me.git
 cd sh.me
 bun install
 ```
 
 ### 3. Local Development
+
+Create a `.dev.vars` file in the root directory:
+
+```text
+API_KEY=your_secret_admin_token
+```
 
 Start the wrangler dev server:
 
@@ -44,26 +50,19 @@ Start the wrangler dev server:
 bun run dev
 ```
 
-Open [http://localhost:8787](http://localhost:8787) in your browser.
+Open [http://localhost:8787](http://localhost:8787). The UI will prompt you for your `API_KEY` the first time you perform an action.
 
-### 4. Configuration
+### 4. Configuration (Cloudflare)
 
-Before deploying, you need to create a KV namespace:
-
-```bash
-bun wrangler kv namespace create LINKS
-```
-
-Update your `wrangler.jsonc` with the generated `id`:
-
-```json
-"kv_namespaces": [
-  {
-    "binding": "LINKS",
-    "id": "YOUR_KV_NAMESPACE_ID"
-  }
-]
-```
+1. Create a KV namespace:
+   ```bash
+   bun wrangler kv namespace create urls
+   ```
+2. Update `wrangler.jsonc` with the generated `id`.
+3. Set your production API Key:
+   ```bash
+   bun wrangler secret put API_KEY
+   ```
 
 ### 5. Deployment
 
@@ -75,9 +74,15 @@ bun run deploy
 
 ## 🔌 API Endpoints
 
-| Method   | Endpoint     | Description                                                 |
-| :------- | :----------- | :---------------------------------------------------------- |
-| `GET`    | `/api/links` | List all available short links                              |
-| `POST`   | `/api/links` | Create a new short link (`{ "code": "...", "url": "..." }`) |
-| `DELETE` | `/api/links` | Delete an existing link (`{ "code": "..." }`)               |
-| `GET`    | `/:code`     | Redirect to the target URL                                  |
+All requests (except redirection) require the `Authorization` header.
+
+| Method   | Endpoint     | Description                                                      |
+| :------- | :----------- | :--------------------------------------------------------------- |
+| `GET`    | `/api/links` | List all available short links                                   |
+| `POST`   | `/api/links` | Create/Gen link (`{ "code": "optional", "url": "https://..." }`) |
+| `DELETE` | `/api/links` | Delete an existing link (`{ "code": "..." }`)                    |
+| `GET`    | `/:code`     | Redirect to the target URL                                       |
+
+---
+
+MADE WITH ❤️ BY ANISH

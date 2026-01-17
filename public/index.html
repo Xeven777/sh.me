@@ -10,7 +10,35 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        @layer base {
+
+            input:-webkit-autofill,
+            input:-webkit-autofill:hover,
+            input:-webkit-autofill:focus,
+            input:-webkit-autofill:active {
+                -webkit-box-shadow: 0 0 0 30px #09090b inset !important;
+                -webkit-text-fill-color: #f4f4f5 !important;
+            }
+        }
+
+        .link-card {
+            transition:
+                transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                background-color 0.2s ease;
+        }
+
+        .link-card:hover {
+            transform: translateY(-2px);
+            background-color: #18181b;
+        }
+
+        .glass {
+            background: rgba(24, 24, 27, 0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+    </style>
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
@@ -30,13 +58,13 @@
             <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 md:p-8 shadow-2xl">
                 <form id="shorten-form" class="grid grid-cols-1 md:grid-cols-[1fr,2fr,auto] gap-4">
                     <div class="space-y-2">
-                        <label class="text-sm font-medium text-zinc-500 ml-1">Short Code</label>
-                        <input type="text" id="code" placeholder="gh" required
+                        <label class="text-sm font-medium text-zinc-500 ml-1">Short Code (optional)</label>
+                        <input type="text" id="code" placeholder="gh" maxlength="30" pattern="[a-zA-Z0-9-]+"
                             class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all placeholder:text-zinc-700">
                     </div>
                     <div class="space-y-2">
                         <label class="text-sm font-medium text-zinc-500 ml-1">Destination URL</label>
-                        <input type="url" id="url" placeholder="https://github.com/anish7" required
+                        <input type="url" id="url" placeholder="https://github.com/xeven777" required maxlength="1500"
                             class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all placeholder:text-zinc-700">
                     </div>
                     <div class="flex items-end">
