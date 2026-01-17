@@ -1,0 +1,26 @@
+@layer base {
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #09090b inset !important;
+    -webkit-text-fill-color: #f4f4f5 !important;
+  }
+}
+
+.link-card {
+  transition:
+    transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.2s ease;
+}
+
+.link-card:hover {
+  transform: translateY(-2px);
+  background-color: #18181b;
+}
+
+.glass {
+  background: rgba(24, 24, 27, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}

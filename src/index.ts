@@ -1,26 +1,61 @@
-import { fromHono } from "chanfana";
 import { Hono } from "hono";
-import { TaskCreate } from "./endpoints/taskCreate";
-import { TaskDelete } from "./endpoints/taskDelete";
-import { TaskFetch } from "./endpoints/taskFetch";
-import { TaskList } from "./endpoints/taskList";
 
-// Start a Hono app
+interface Env {
+  urls: KVNamespace;
+  ASSETS: Fetcher;
+}
+
 const app = new Hono<{ Bindings: Env }>();
 
-// Setup OpenAPI registry
-const openapi = fromHono(app, {
-	docs_url: "/",
+app.get("/api/links", async (c) => {
+  const list = await c.env.urls.list();
+  const links: Record<string, string> = {};
+
+  for (const key of list.keys) {
+    const value = await c.env.urls.get(key.name);
+    if (value) {
+      links[key.name] = value;
+    }
+  }
+
+  return c.json(links);
 });
 
-// Register OpenAPI endpoints
-openapi.get("/api/tasks", TaskList);
-openapi.post("/api/tasks", TaskCreate);
-openapi.get("/api/tasks/:taskSlug", TaskFetch);
-openapi.delete("/api/tasks/:taskSlug", TaskDelete);
+app.post("/api/links", async (c) => {
+  const { code, url } = await c.req.json<{ code: string; url: string }>();
 
-// You may also register routes for non OpenAPI directly on Hono
-// app.get('/test', (c) => c.text('Hono!'))
+  if (!code || !url) {
+    return c.json({ success: false, error: "Missing code or url" }, 400);
+  }
 
-// Export the Hono app
+  await c.env.urls.put(code, url);
+  return c.json({ success: true });
+});
+
+app.delete("/api/links", async (c) => {
+  const { code } = await c.req.json<{ code: string }>();
+
+  if (!code) {
+    return c.json({ success: false, error: "Missing code" }, 400);
+  }
+
+  await c.env.urls.delete(code);
+  return c.json({ success: true });
+});
+
+app.get("/:code", async (c) => {
+  const code = c.req.param("code");
+  const url = await c.env.urls.get(code);
+
+  if (url) {
+    return c.redirect(url, 302);
+  }
+
+  return c.env.ASSETS.fetch(c.req.raw);
+});
+
+app.get("*", async (c) => {
+  return c.env.ASSETS.fetch(c.req.raw);
+});
+
 export default app;

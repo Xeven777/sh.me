@@ -1,25 +1,83 @@
-# Cloudflare Workers OpenAPI 3.1
+# 🚀 sh.me — Tiny URL Shortener
 
-This is a Cloudflare Worker with OpenAPI 3.1 using [chanfana](https://github.com/cloudflare/chanfana) and [Hono](https://github.com/honojs/hono).
+A high-performance, premium URL shortener built on the edge with **Cloudflare Workers**, **Hono**, and **Cloudflare KV**.
 
-This is an example project made to be used as a quick start into building OpenAPI compliant Workers that generates the
-`openapi.json` schema automatically from code and validates the incoming request to the defined parameters or request body.
+## ✨ Features
 
-## Get started
+- **Edge Redirection**: Ultra-fast 302 redirects served from the nearest Cloudflare PoP.
+- **Premium Admin UI**: A sleek, dark-mode dashboard built with Tailwind CSS, Lucide Icons, and Vanilla JS.
+- **KV Storage**: Simple and persistent key-value storage for link mappings.
+- **Full Management**: Add, view, and delete short links with instant UI updates.
+- **Static Assets**: Frontend assets served directly via the Worker's Asset binding.
+- **Mobile Responsive**: Works perfectly on any device.
 
-1. Sign up for [Cloudflare Workers](https://workers.dev). The free tier is more than enough for most use cases.
-2. Clone this project and install dependencies with `npm install`
-3. Run `wrangler login` to login to your Cloudflare account in wrangler
-4. Run `wrangler deploy` to publish the API to Cloudflare Workers
+## 🛠️ Tech Stack
 
-## Project structure
+- **Core**: [Hono](https://hono.dev/) (Lightweight Web Framework)
+- **Runtime**: [Cloudflare Workers](https://workers.cloudflare.com/)
+- **Database**: [Cloudflare KV](https://developers.cloudflare.com/kv/)
+- **Frontend**: HTML5, Vanilla JavaScript, [Tailwind CSS](https://tailwindcss.com/)
+- **Icons**: [Lucide](https://lucide.dev/)
+- **Package Manager**: Bun
 
-1. Your main router is defined in `src/index.ts`.
-2. Each endpoint has its own file in `src/endpoints/`.
-3. For more information read the [chanfana documentation](https://chanfana.pages.dev/) and [Hono documentation](https://hono.dev/docs).
+## 🚀 Getting Started
 
-## Development
+### 1. Prerequisites
 
-1. Run `wrangler dev` to start a local instance of the API.
-2. Open `http://localhost:8787/` in your browser to see the Swagger interface where you can try the endpoints.
-3. Changes made in the `src/` folder will automatically trigger the server to reload, you only need to refresh the Swagger interface.
+- [Bun](https://bun.sh/) installed.
+- [Wrangler](https://developers.cloudflare.com/workers/wrangler/install-and-update/) CLI installed.
+- A Cloudflare account.
+
+### 2. Installation
+
+```bash
+git clone https://github.com/anish7/sh.me.git
+cd sh.me
+bun install
+```
+
+### 3. Local Development
+
+Start the wrangler dev server:
+
+```bash
+bun run dev
+```
+
+Open [http://localhost:8787](http://localhost:8787) in your browser.
+
+### 4. Configuration
+
+Before deploying, you need to create a KV namespace:
+
+```bash
+bun wrangler kv namespace create LINKS
+```
+
+Update your `wrangler.jsonc` with the generated `id`:
+
+```json
+"kv_namespaces": [
+  {
+    "binding": "LINKS",
+    "id": "YOUR_KV_NAMESPACE_ID"
+  }
+]
+```
+
+### 5. Deployment
+
+Deploy to Cloudflare's global network:
+
+```bash
+bun run deploy
+```
+
+## 🔌 API Endpoints
+
+| Method   | Endpoint     | Description                                                 |
+| :------- | :----------- | :---------------------------------------------------------- |
+| `GET`    | `/api/links` | List all available short links                              |
+| `POST`   | `/api/links` | Create a new short link (`{ "code": "...", "url": "..." }`) |
+| `DELETE` | `/api/links` | Delete an existing link (`{ "code": "..." }`)               |
+| `GET`    | `/:code`     | Redirect to the target URL                                  |
