@@ -1,1 +1,376 @@
-h1 { font-family: Arial, Helvetica, sans-serif; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #09090b;
+  color: #f4f4f5;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+header {
+  margin-bottom: 4rem;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.logo {
+  padding: 0.625rem;
+  background: #4f46e5;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.2);
+}
+
+.logo i {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: white;
+}
+
+h1 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: white;
+}
+
+.subtitle {
+  color: #a1a1aa;
+  font-size: 1.125rem;
+}
+
+.form-section {
+  margin-bottom: 4rem;
+}
+
+.form-card {
+  background: #18181b;
+  border: 1px solid #27272a;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #71717a;
+  margin-left: 0.25rem;
+}
+
+input {
+  width: 100%;
+  background: #09090b;
+  border: 1px solid #27272a;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: white;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.2s;
+}
+
+input:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+input::placeholder {
+  color: #3f3f46;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #09090b inset !important;
+  -webkit-text-fill-color: #f4f4f5 !important;
+}
+
+button {
+  background: #4f46e5;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.75rem 2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.2);
+}
+
+button:hover {
+  background: #6366f1;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+button i {
+  width: 1.25rem;
+  height: 1.25rem;
+  transition: transform 0.2s;
+}
+
+button:hover i {
+  transform: rotate(90deg);
+}
+
+.links-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.links-header h2 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: white;
+}
+
+.badge {
+  font-size: 0.625rem;
+  font-weight: 700;
+  background: #27272a;
+  color: #a1a1aa;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid #3f3f46;
+}
+
+.links-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 0;
+  color: #52525b;
+}
+
+.spinner {
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid transparent;
+  border-bottom-color: #4f46e5;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 5rem 0;
+  background: rgba(24, 24, 27, 0.5);
+  border: 2px dashed #27272a;
+  border-radius: 1rem;
+}
+
+.empty-state i {
+  width: 3rem;
+  height: 3rem;
+  color: #3f3f46;
+  margin: 0 auto 1rem;
+}
+
+.empty-state p {
+  color: #71717a;
+}
+
+.link-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background: #18181b;
+  border: 1px solid #27272a;
+  border-radius: 0.75rem;
+  transition: all 0.3s;
+}
+
+.link-card:hover {
+  border-color: #52525b;
+  background: rgba(24, 24, 27, 0.5);
+}
+
+.link-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding-right: 1rem;
+  flex: 1;
+}
+
+.link-code-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.link-code {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #818cf8;
+}
+
+.link-code-row i {
+  width: 1rem;
+  height: 1rem;
+  color: #52525b;
+}
+
+.link-url {
+  color: #a1a1aa;
+  font-size: 0.875rem;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.2s;
+}
+
+.link-url:hover {
+  color: white;
+}
+
+.link-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.link-card:hover .link-actions {
+  opacity: 1;
+}
+
+.action-btn {
+  padding: 0.5rem;
+  background: transparent;
+  border: none;
+  border-radius: 0.5rem;
+  color: #a1a1aa;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: none;
+}
+
+.action-btn:hover {
+  background: #3f3f46;
+  color: white;
+}
+
+.action-btn.delete:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+}
+
+.action-btn i {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.action-btn:hover i {
+  transform: none;
+}
+
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #4f46e5;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  z-index: 50;
+  font-weight: 500;
+  pointer-events: none;
+  animation: slideIn 0.3s ease-out;
+}
+
+.toast.error {
+  background: #ef4444;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 5rem 1.5rem;
+  }
+
+  h1 {
+    font-size: 2.25rem;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr 2fr auto;
+  }
+
+  button {
+    width: auto;
+  }
+}

@@ -7,7 +7,7 @@ export const renderer = jsxRenderer(({ children }) => {
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Sh.Me | Tiny URL Shortener</title>
-        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="/static/style.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
@@ -26,24 +26,12 @@ export const renderer = jsxRenderer(({ children }) => {
         <style
           dangerouslySetInnerHTML={{
             __html: `
-          @layer base {
-            input:-webkit-autofill,
-            input:-webkit-autofill:hover,
-            input:-webkit-autofill:focus,
-            input:-webkit-autofill:active {
-              -webkit-box-shadow: 0 0 0 30px #09090b inset !important;
-              -webkit-text-fill-color: #f4f4f5 !important;
-            }
-          }
-          body { font-family: 'Inter', sans-serif; }
           .link-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         `,
           }}
         />
       </head>
-      <body className="bg-zinc-950 text-zinc-100 min-h-screen selection:bg-indigo-500/30">
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 });
