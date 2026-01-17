@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "sh-app",
+  "name": "sh-me",
   "compatibility_date": "2026-01-17",
   "pages_build_output_dir": "./dist",
   "compatibility_flags": [
