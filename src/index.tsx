@@ -14,9 +14,18 @@ app.use(renderer);
 // Auth Middleware
 const authMiddleware = async (c: any, next: any) => {
   const auth = c.req.header("Authorization");
-  if (c.env.API_KEY && auth !== c.env.API_KEY) {
+
+  if (!c.env.API_KEY) {
+    return c.json(
+      { success: false, error: "Server configuration error: API_KEY not set" },
+      500,
+    );
+  }
+
+  if (!auth || auth !== c.env.API_KEY) {
     return c.json({ success: false, error: "Unauthorized" }, 401);
   }
+
   await next();
 };
 
