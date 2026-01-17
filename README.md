@@ -49,7 +49,7 @@ Open [http://localhost:5173](http://localhost:5173).
 ### 4. Configuration (Cloudflare)
 
 1. Create a KV namespace named `urls` in your Cloudflare Dashboard.
-2. Update `wrangler.jsonc` with your KV namespace `id`.
+2. Update `wrangler.toml` with your KV namespace `id`.
 3. Set your environment variables (`API_KEY`, `RESERVED_KEYS`) in the Cloudflare Pages settings.
 
 ### 5. Deployment

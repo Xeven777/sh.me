@@ -1,0 +1,14 @@
+name = "sh-me"
+compatibility_date = "2026-01-17"
+pages_build_output_dir = "dist"
+compatibility_flags = ["nodejs_compat"]
+
+[observability]
+enabled = true
+
+[[kv_namespaces]]
+binding = "urls"
+id = "9fb041e6887d4cdfb35429c3d0ad08eb"
+
+[vars]
+RESERVED_KEYS = "api,public,static,assets,admin"
