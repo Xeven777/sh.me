@@ -15,21 +15,14 @@ export const renderer = jsxRenderer(({ children }) => {
           crossorigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Instrument+Serif:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
           rel="stylesheet"
         />
         <link
           rel="icon"
-          href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 18 17'><text x='0' y='14'>😽</text></svg>"
+          href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23A8E524'/><path d='M30 30L70 70M70 30L30 70' stroke='black' stroke-width='10'/></svg>"
         />
         <script src="https://unpkg.com/lucide@latest"></script>
-        <style
-          dangerouslySetInnerHTML={{
-            __html: `
-          .link-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        `,
-          }}
-        />
       </head>
       <body>{children}</body>
     </html>

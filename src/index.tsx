@@ -141,9 +141,11 @@ app.get("/", (c) => {
           <div class="logo">
             <i data-lucide="link"></i>
           </div>
-          <h1>Sh.Me</h1>
+          <h1>
+            Sh.<span>me</span>
+          </h1>
         </div>
-        <p class="subtitle">Manage your short links with ease and speed.</p>
+        <p class="subtitle">Secure / Minimal / Fast asf</p>
       </header>
 
       <section class="form-section">
