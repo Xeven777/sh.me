@@ -73,4 +73,4 @@ All requests (except redirection) require the `Authorization` header if `API_KEY
 
 ---
 
-MADE WITH ❤️ BY ANISH
+MADE WITH ❤️ BY ANISH BISWAS (XEVEN777)
